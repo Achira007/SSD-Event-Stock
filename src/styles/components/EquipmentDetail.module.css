@@ -1,0 +1,271 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 32px;
+  margin-top: 24px;
+}
+
+.imageSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.image {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid var(--border-glass);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  background: var(--bg-surface);
+}
+
+.detailsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.titleHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.name {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.quantityGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.quantityCard {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+}
+
+.quantityLabel {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.quantityVal {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.totalBanner {
+  background: rgba(255,255,255,0.02);
+  border: 1px dashed var(--border-glass);
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* Outstanding Borrows List */
+.outstandingPanel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 16px;
+}
+
+.outstandingTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.borrowRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid var(--border-glass);
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.borrowRow:last-child {
+  margin-bottom: 0;
+}
+
+.borrowInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.borrowName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.borrowDetails {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.returnBtn {
+  background: var(--primary);
+  color: #fff;
+  padding: 6px 16px;
+  font-size: 13px;
+}
+
+.returnBtn:hover {
+  background: var(--primary-hover);
+}
+
+.borrowActionWrapper {
+  margin-top: 24px;
+}
+
+.btnFull {
+  width: 100%;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Admin panel styling */
+.adminSection {
+  background: rgba(99, 102, 241, 0.05);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.adminTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #a5b4fc;
+}
+
+.adminBtnRow {
+  display: flex;
+  gap: 12px;
+}
+
+.adminBtnRow button {
+  flex: 1;
+  padding: 10px;
+  font-size: 13px;
+}
+
+/* Form Styles inside Modals */
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.formGroup label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.radioGroup {
+  display: flex;
+  gap: 16px;
+  margin: 8px 0;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.radioLabel input {
+  width: auto;
+  cursor: pointer;
+}
+
+.warningBox {
+  padding: 12px 16px;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 8px;
+  color: var(--status-inuse-text);
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .name {
+    font-size: 22px;
+  }
+
+  .returnBtn {
+    min-height: 44px;
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .adminBtnRow button {
+    min-height: 44px;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .radioGroup {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .quantityGrid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .quantityCard {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 12px 16px;
+  }
+
+  .adminBtnRow {
+    flex-direction: column;
+  }
+}
+

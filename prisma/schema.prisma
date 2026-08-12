@@ -1,0 +1,113 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                String                 @id @default(uuid())
+  googleSubjectId   String                 @unique
+  email             String                 @unique
+  displayName       String
+  avatarUrl         String?
+  createdAt         DateTime               @default(now())
+  updatedAt         DateTime               @updatedAt
+  
+  createdEvents     Event[]
+  borrows           BorrowRecord[]
+  returns           ReturnRecord[]
+  adjustments       InventoryAdjustment[]
+
+  @@map("users")
+}
+
+model Equipment {
+  id                 String                 @id @default(uuid())
+  name               String
+  imageUrl           String
+  totalQuantity      Int                    @default(0)
+  availableQuantity  Int                    @default(0)
+  inUseQuantity      Int                    @default(0)
+  unavailableQuantity Int                   @default(0)
+  createdAt          DateTime               @default(now())
+  updatedAt          DateTime               @updatedAt
+  deletedAt          DateTime?              // Soft delete indicator
+
+  borrows            BorrowRecord[]
+  adjustments        InventoryAdjustment[]
+
+  @@map("equipment")
+}
+
+model Event {
+  id          String         @id @default(uuid())
+  name        String
+  description String?
+  startAt     DateTime
+  endAt       DateTime?
+  status      String         // "ACTIVE" | "COMPLETED"
+  createdBy   String
+  creator     User           @relation(fields: [createdBy], references: [id])
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  completedAt DateTime?
+
+  borrows     BorrowRecord[]
+
+  @@map("events")
+}
+
+model BorrowRecord {
+  id           String         @id @default(uuid())
+  equipmentId  String
+  equipment    Equipment      @relation(fields: [equipmentId], references: [id])
+  eventId      String?
+  event        Event?         @relation(fields: [eventId], references: [id])
+  borrowedBy   String
+  borrower     User           @relation(fields: [borrowedBy], references: [id])
+  quantity     Int
+  purposeType  String         // "CURRENT_EVENT" | "GENERAL"
+  purposeNote  String?
+  status       String         // "OUTSTANDING" | "COMPLETED"
+  borrowedAt   DateTime       @default(now())
+  completedAt  DateTime?
+  createdAt    DateTime       @default(now())
+
+  returns      ReturnRecord[]
+
+  @@map("borrow_records")
+}
+
+model ReturnRecord {
+  id                  String       @id @default(uuid())
+  borrowRecordId      String
+  borrowRecord        BorrowRecord @relation(fields: [borrowRecordId], references: [id])
+  returnedBy          String
+  returner            User         @relation(fields: [returnedBy], references: [id])
+  returnedQuantity    Int
+  unavailableQuantity Int          @default(0)
+  unavailableReason   String?      // "DAMAGED" | "OTHER"
+  note                String?
+  returnedAt          DateTime     @default(now())
+  createdAt           DateTime     @default(now())
+
+  @@map("return_records")
+}
+
+model InventoryAdjustment {
+  id             String    @id @default(uuid())
+  equipmentId    String
+  equipment      Equipment @relation(fields: [equipmentId], references: [id])
+  performedBy    String
+  performer      User      @relation(fields: [performedBy], references: [id])
+  adjustmentType String    // "ADD_STOCK" | "REMOVE_STOCK" | "REPAIR_RETURN"
+  quantity       Int
+  reason         String?
+  note           String?
+  createdAt      DateTime  @default(now())
+
+  @@map("inventory_adjustments")
+}
